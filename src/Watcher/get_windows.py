@@ -47,12 +47,7 @@ def is_window_changed(a, afk, timeout):
     while not(result):
         time.sleep(0.5)
         b = active_window()
-        if a != b :
-            result = True
-        elif get_afk_status(afk, timeout):
-            result = True
-        else:
-            result = False
+        result = bool(a != b or a == b and get_afk_status(afk, timeout))
     return result
 
 

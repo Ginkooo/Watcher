@@ -11,8 +11,7 @@ def get_afk_status(afk_active, timeout):
         return False
 
 def returned_from_afk(afk_active, timeout):
-    has_returned = (afk_active and not (is_afk(timeout)))
-    return has_returned
+    return (afk_active and not (is_afk(timeout)))
 
 def is_afk(timeout):
     timeout = timeout * 60 * 1000 - 200 # minimizing 200 milisec error
@@ -21,11 +20,7 @@ def is_afk(timeout):
     if (time_since_last_input > timeout):
         video_playback = os.popen("""pacmd list-sink-inputs  | grep -w state | grep -i 'RUNNING'""").read()
         # if playback is not running as well as user is AFK
-        if "RUNNING" in video_playback:
-            return False
-        # if playback is running is background as well as user is AFK
-        else:
-            return True
+        return "RUNNING" not in video_playback
     return False
 
 # testing out
